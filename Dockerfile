@@ -4,16 +4,19 @@ LABEL org.opencontainers.image.source="https://github.com/mikefeixu/fgbio_postpr
 LABEL org.opencontainers.image.description="fgbio postprocessing tools including simplex_filter"
 LABEL org.opencontainers.image.version="0.3.0"
 
-# Install build dependencies for pysam (requires htslib C headers)
+# Install build dependencies for pysam and Nextflow requirements (procps provides 'ps')
 RUN apt-get update && apt-get install -y --no-install-recommends \
-        gcc \
-        libc6-dev \
-        zlib1g-dev \
-        libbz2-dev \
-        liblzma-dev \
-        libcurl4-openssl-dev \
-        libssl-dev \
+    gcc \
+    libc6-dev \
+    zlib1g-dev \
+    libbz2-dev \
+    liblzma-dev \
+    libcurl4-openssl-dev \
+    libssl-dev \
+    procps \
     && rm -rf /var/lib/apt/lists/*
+
+RUN pip install --no-cache-dir cython
 
 WORKDIR /app
 
